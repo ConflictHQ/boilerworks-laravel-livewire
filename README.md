@@ -9,3 +9,7 @@ Laravel 11 with Livewire 3 for teams that want reactive UI without leaving PHP. 
 ## Want to help build this?
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and the [stack primer](../primers/laravel/PRIMER.md) for architecture and conventions.
+
+---
+
+Boilerworks is a [Conflict](https://weareconflict.com) brand. CONFLICT is a registered trademark of Conflict LLC.

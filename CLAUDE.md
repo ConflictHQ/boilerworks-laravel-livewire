@@ -6,12 +6,44 @@ Read it before writing any code.
 
 ## Stack
 
-- **Backend**: Laravel 11
-- **Frontend**: Livewire 3 + Blade
-- **API**: Livewire (server-rendered reactive)
-- **ORM**: Eloquent
-- **Jobs**: Laravel Horizon + Redis
+- **Backend**: Laravel 12 (PHP 8.2+)
+- **Frontend**: Livewire 3 + Blade + Tailwind CSS + Alpine.js
+- **API**: Livewire (server-rendered reactive components)
+- **ORM**: Eloquent (UUID PKs, soft deletes, audit trails)
+- **Jobs**: Laravel Queues + Redis
+- **Auth**: Laravel session-based (built-in)
+- **Permissions**: Spatie Laravel Permission v6 (group-based roles)
+- **Admin**: Filament v3
+- **Testing**: Pest PHP
+- **Database**: PostgreSQL 16
+- **Cache/Broker**: Redis 7
 
-## Status
+## Key Patterns
 
-This template is planned. See the [stack primer](../primers/laravel/PRIMER.md) for architecture decisions and build order.
+- UUID PKs via `HasUuid` trait (route key = `uuid`)
+- Audit trails via `HasAuditTrail` trait (`created_by`/`updated_by`)
+- Soft deletes on all domain models
+- Permission middleware applied at route level (not controller constructors -- L12 removed `$this->middleware()`)
+- Feature toggles via `config/features.php` + env vars
+- Forms engine: JSON Schema definitions, dynamic field rendering
+- Workflow engine: state machine with transition logging
+
+## Ports
+
+- App: 8089
+- PostgreSQL: 5449
+- Redis: 6391
+
+## Testing
+
+```bash
+php artisan test
+```
+
+Tests use SQLite in-memory, `auth` middleware (not `auth:sanctum`), and seed permissions via `PermissionSeeder` in `Pest.php`.
+
+## Docker
+
+```bash
+cd docker && docker compose up -d --build
+```
