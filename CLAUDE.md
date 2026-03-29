@@ -30,9 +30,9 @@ Read it before writing any code.
 
 ## Ports
 
-- App: 8089
-- PostgreSQL: 5449
-- Redis: 6391
+- App: 8000
+- PostgreSQL: 5432
+- Redis: 6379
 
 ## Testing
 
