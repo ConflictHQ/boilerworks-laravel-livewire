@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index(): View
     {
         return view('categories.index', [
-            'categories' => Category::withCount('products')
+            'categories' => Category::withCount('items')
                 ->orderBy('created_at', 'desc')
                 ->paginate(25),
         ]);
@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function show(Category $category): View
     {
         return view('categories.show', [
-            'category' => $category->loadCount('products')->load('creator'),
+            'category' => $category->loadCount('items')->load('creator'),
         ]);
     }
 

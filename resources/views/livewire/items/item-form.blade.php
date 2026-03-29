@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-2xl font-bold mb-6">{{ $product ? 'Edit Product' : 'Create Product' }}</h1>
+    <h1 class="text-2xl font-bold mb-6">{{ $item ? 'Edit Item' : 'Create Item' }}</h1>
     <div class="bg-zinc-800 rounded-xl border border-zinc-700 p-6">
         <form wire:submit="save" class="space-y-4">
             <div>
@@ -38,9 +38,9 @@
                 </select>
             </div>
             <div class="flex justify-end space-x-3">
-                <a href="{{ route('livewire.products.index') }}" class="rounded-lg border border-zinc-600 px-4 py-2 text-sm text-zinc-400 hover:text-white" wire:navigate>Cancel</a>
+                <a href="{{ route('livewire.items.index') }}" class="rounded-lg border border-zinc-600 px-4 py-2 text-sm text-zinc-400 hover:text-white" wire:navigate>Cancel</a>
                 <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700">
-                    {{ $product ? 'Update Product' : 'Create Product' }}
+                    {{ $item ? 'Update Item' : 'Create Item' }}
                 </button>
             </div>
         </form>

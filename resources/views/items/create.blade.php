@@ -1,7 +1,7 @@
 <x-app-layout>
-    <h1 class="text-2xl font-bold mb-6">Create Product</h1>
+    <h1 class="text-2xl font-bold mb-6">Create Item</h1>
     <div class="bg-zinc-800 rounded-xl border border-zinc-700 p-6">
-        <form method="POST" action="{{ route('products.store') }}" class="space-y-4">
+        <form method="POST" action="{{ route('items.store') }}" class="space-y-4">
             @csrf
             <div>
                 <label for="name" class="block text-sm text-zinc-400 mb-1">Name</label>
@@ -38,8 +38,8 @@
                 </select>
             </div>
             <div class="flex justify-end space-x-3">
-                <a href="{{ route('products.index') }}" class="rounded-lg border border-zinc-600 px-4 py-2 text-sm text-zinc-400 hover:text-white">Cancel</a>
-                <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700">Create Product</button>
+                <a href="{{ route('items.index') }}" class="rounded-lg border border-zinc-600 px-4 py-2 text-sm text-zinc-400 hover:text-white">Cancel</a>
+                <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700">Create Item</button>
             </div>
         </form>
     </div>

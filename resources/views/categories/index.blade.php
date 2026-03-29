@@ -10,7 +10,7 @@
             <thead class="bg-zinc-900">
                 <tr>
                     <th class="px-6 py-3 text-left text-zinc-400">Name</th>
-                    <th class="px-6 py-3 text-left text-zinc-400">Products</th>
+                    <th class="px-6 py-3 text-left text-zinc-400">Items</th>
                     <th class="px-6 py-3 text-left text-zinc-400">Description</th>
                     <th class="px-6 py-3 text-right text-zinc-400">Actions</th>
                 </tr>
@@ -19,7 +19,7 @@
                 @foreach($categories as $category)
                 <tr class="hover:bg-zinc-750">
                     <td class="px-6 py-4"><a href="{{ route('categories.show', $category) }}" class="text-indigo-400 hover:text-indigo-300">{{ $category->name }}</a></td>
-                    <td class="px-6 py-4 text-zinc-400">{{ $category->products_count }}</td>
+                    <td class="px-6 py-4 text-zinc-400">{{ $category->items_count }}</td>
                     <td class="px-6 py-4 text-zinc-400">{{ Str::limit($category->description, 60) }}</td>
                     <td class="px-6 py-4 text-right space-x-2">
                         <a href="{{ route('categories.edit', $category) }}" class="text-zinc-400 hover:text-white text-xs">Edit</a>

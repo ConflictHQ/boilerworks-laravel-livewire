@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Livewire\Products;
+namespace App\Livewire\Items;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Item;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('components.app-layout')]
-class ProductForm extends Component
+class ItemForm extends Component
 {
-    public ?Product $product = null;
+    public ?Item $item = null;
 
     public string $name = '';
 
@@ -23,15 +23,15 @@ class ProductForm extends Component
 
     public string $category_id = '';
 
-    public function mount(?Product $product = null): void
+    public function mount(?Item $item = null): void
     {
-        if ($product?->exists) {
-            $this->product = $product;
-            $this->name = $product->name;
-            $this->description = $product->description ?? '';
-            $this->price = (string) $product->price;
-            $this->status = $product->status;
-            $this->category_id = (string) ($product->category_id ?? '');
+        if ($item?->exists) {
+            $this->item = $item;
+            $this->name = $item->name;
+            $this->description = $item->description ?? '';
+            $this->price = (string) $item->price;
+            $this->status = $item->status;
+            $this->category_id = (string) ($item->category_id ?? '');
         }
     }
 
@@ -49,22 +49,22 @@ class ProductForm extends Component
             $validated['category_id'] = null;
         }
 
-        if ($this->product) {
-            $this->product->update($validated);
-            session()->flash('success', 'Product updated.');
+        if ($this->item) {
+            $this->item->update($validated);
+            session()->flash('success', 'Item updated.');
 
-            $this->redirect(route('livewire.products.index'), navigate: true);
+            $this->redirect(route('livewire.items.index'), navigate: true);
         } else {
-            Product::create($validated);
-            session()->flash('success', 'Product created.');
+            Item::create($validated);
+            session()->flash('success', 'Item created.');
 
-            $this->redirect(route('livewire.products.index'), navigate: true);
+            $this->redirect(route('livewire.items.index'), navigate: true);
         }
     }
 
     public function render(): View
     {
-        return view('livewire.products.product-form', [
+        return view('livewire.items.item-form', [
             'categories' => Category::orderBy('name')->get(['id', 'uuid', 'name']),
         ]);
     }

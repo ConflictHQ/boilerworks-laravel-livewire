@@ -1,9 +1,9 @@
 <?php
 
-use App\Livewire\Products\ProductForm;
-use App\Livewire\Products\ProductIndex;
+use App\Livewire\Items\ItemForm;
+use App\Livewire\Items\ItemIndex;
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Item;
 use App\Models\User;
 use Livewire\Livewire;
 
@@ -20,76 +20,76 @@ beforeEach(function () {
     $this->category = Category::factory()->create();
 });
 
-describe('ProductIndex', function () {
-    it('renders the product listing', function () {
-        Product::factory()->count(3)->create(['category_id' => $this->category->id]);
+describe('ItemIndex', function () {
+    it('renders the item listing', function () {
+        Item::factory()->count(3)->create(['category_id' => $this->category->id]);
 
         Livewire::actingAs($this->viewer)
-            ->test(ProductIndex::class)
+            ->test(ItemIndex::class)
             ->assertStatus(200)
-            ->assertSee('Products');
+            ->assertSee('Items');
     });
 
-    it('filters products by search term', function () {
-        Product::factory()->create([
+    it('filters items by search term', function () {
+        Item::factory()->create([
             'name' => 'Widget Alpha',
             'category_id' => $this->category->id,
         ]);
-        Product::factory()->create([
+        Item::factory()->create([
             'name' => 'Gadget Beta',
             'category_id' => $this->category->id,
         ]);
 
         Livewire::actingAs($this->viewer)
-            ->test(ProductIndex::class)
+            ->test(ItemIndex::class)
             ->set('search', 'Widget')
             ->assertSee('Widget Alpha')
             ->assertDontSee('Gadget Beta');
     });
 
-    it('shows empty state when no products match search', function () {
-        Product::factory()->create([
+    it('shows empty state when no items match search', function () {
+        Item::factory()->create([
             'name' => 'Widget Alpha',
             'category_id' => $this->category->id,
         ]);
 
         Livewire::actingAs($this->viewer)
-            ->test(ProductIndex::class)
+            ->test(ItemIndex::class)
             ->set('search', 'Nonexistent')
-            ->assertSee('No products found.');
+            ->assertSee('No items found.');
     });
 
-    it('soft-deletes a product via delete action', function () {
-        $product = Product::factory()->create(['category_id' => $this->category->id]);
+    it('soft-deletes a item via delete action', function () {
+        $item = Item::factory()->create(['category_id' => $this->category->id]);
 
         Livewire::actingAs($this->admin)
-            ->test(ProductIndex::class)
-            ->call('delete', $product->uuid);
+            ->test(ItemIndex::class)
+            ->call('delete', $item->uuid);
 
-        $this->assertSoftDeleted('products', ['uuid' => $product->uuid]);
+        $this->assertSoftDeleted('items', ['uuid' => $item->uuid]);
     });
 
-    it('paginates products', function () {
-        Product::factory()->count(30)->create(['category_id' => $this->category->id]);
+    it('paginates items', function () {
+        Item::factory()->count(30)->create(['category_id' => $this->category->id]);
 
         Livewire::actingAs($this->viewer)
-            ->test(ProductIndex::class)
-            ->assertSee('Products')
+            ->test(ItemIndex::class)
+            ->assertSee('Items')
             ->assertStatus(200);
     });
 });
 
-describe('ProductForm', function () {
+describe('ItemForm', function () {
     it('renders the create form', function () {
         Livewire::actingAs($this->editor)
-            ->test(ProductForm::class)
+            ->test(ItemForm::class)
             ->assertStatus(200)
-            ->assertSee('Create Product');
+            ->assertSee('Create Item');
     });
 
-    it('creates a product with valid data', function () {
+    it('creates a item with valid data', function () {
         Livewire::actingAs($this->editor)
-            ->test(ProductForm::class)
+            ->test(ItemForm::class)
             ->set('name', 'New Widget')
             ->set('description', 'A fine widget')
             ->set('price', '19.99')
@@ -98,7 +98,7 @@ describe('ProductForm', function () {
             ->call('save')
             ->assertHasNoErrors();
 
-        $this->assertDatabaseHas('products', [
+        $this->assertDatabaseHas('items', [
             'name' => 'New Widget',
             'status' => 'active',
         ]);
@@ -106,7 +106,7 @@ describe('ProductForm', function () {
 
     it('validates required fields', function () {
         Livewire::actingAs($this->editor)
-            ->test(ProductForm::class)
+            ->test(ItemForm::class)
             ->set('name', '')
             ->set('price', '')
             ->set('status', '')
@@ -116,16 +116,16 @@ describe('ProductForm', function () {
 
     it('validates price must be positive', function () {
         Livewire::actingAs($this->editor)
-            ->test(ProductForm::class)
-            ->set('name', 'Bad Price Product')
+            ->test(ItemForm::class)
+            ->set('name', 'Bad Price Item')
             ->set('price', '0')
             ->set('status', 'active')
             ->call('save')
             ->assertHasErrors(['price']);
     });
 
-    it('loads existing product data for editing', function () {
-        $product = Product::factory()->create([
+    it('loads existing item data for editing', function () {
+        $item = Item::factory()->create([
             'name' => 'Existing Widget',
             'price' => 42.50,
             'status' => 'active',
@@ -133,29 +133,29 @@ describe('ProductForm', function () {
         ]);
 
         Livewire::actingAs($this->editor)
-            ->test(ProductForm::class, ['product' => $product])
+            ->test(ItemForm::class, ['item' => $item])
             ->assertSet('name', 'Existing Widget')
             ->assertSet('price', '42.50')
             ->assertSet('status', 'active')
-            ->assertSee('Edit Product');
+            ->assertSee('Edit Item');
     });
 
-    it('updates an existing product', function () {
-        $product = Product::factory()->create([
+    it('updates an existing item', function () {
+        $item = Item::factory()->create([
             'name' => 'Old Name',
             'category_id' => $this->category->id,
         ]);
 
         Livewire::actingAs($this->editor)
-            ->test(ProductForm::class, ['product' => $product])
+            ->test(ItemForm::class, ['item' => $item])
             ->set('name', 'Updated Name')
             ->set('price', '55.00')
             ->set('status', 'active')
             ->call('save')
             ->assertHasNoErrors();
 
-        $this->assertDatabaseHas('products', [
-            'uuid' => $product->uuid,
+        $this->assertDatabaseHas('items', [
+            'uuid' => $item->uuid,
             'name' => 'Updated Name',
         ]);
     });

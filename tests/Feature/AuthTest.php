@@ -99,8 +99,8 @@ describe('unauthenticated access', function () {
             ->assertRedirect(route('login'));
     });
 
-    it('redirects guests to login for products', function () {
-        $this->get(route('products.index'))
+    it('redirects guests to login for items', function () {
+        $this->get(route('items.index'))
             ->assertRedirect(route('login'));
     });
 

@@ -19,8 +19,8 @@
                 <a href="{{ route('dashboard') }}" class="flex items-center px-3 py-2 rounded-lg text-sm {{ request()->routeIs('dashboard') ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white' }}">
                     Dashboard
                 </a>
-                <a href="{{ route('products.index') }}" class="flex items-center px-3 py-2 rounded-lg text-sm {{ request()->routeIs('products.*') ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white' }}">
-                    Products
+                <a href="{{ route('items.index') }}" class="flex items-center px-3 py-2 rounded-lg text-sm {{ request()->routeIs('items.*') ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white' }}">
+                    Items
                 </a>
                 <a href="{{ route('categories.index') }}" class="flex items-center px-3 py-2 rounded-lg text-sm {{ request()->routeIs('categories.*') ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white' }}">
                     Categories

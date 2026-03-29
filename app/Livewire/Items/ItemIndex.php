@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Products;
+namespace App\Livewire\Items;
 
-use App\Models\Product;
+use App\Models\Item;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
@@ -10,7 +10,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.app-layout')]
-class ProductIndex extends Component
+class ItemIndex extends Component
 {
     use WithPagination;
 
@@ -24,15 +24,15 @@ class ProductIndex extends Component
 
     public function delete(string $uuid): void
     {
-        $product = Product::where('uuid', $uuid)->firstOrFail();
-        $product->delete();
+        $item = Item::where('uuid', $uuid)->firstOrFail();
+        $item->delete();
 
-        session()->flash('success', 'Product deleted.');
+        session()->flash('success', 'Item deleted.');
     }
 
     public function render(): View
     {
-        $query = Product::with('category')
+        $query = Item::with('category')
             ->orderBy('created_at', 'desc');
 
         if ($this->search !== '') {
@@ -42,8 +42,8 @@ class ProductIndex extends Component
             });
         }
 
-        return view('livewire.products.product-index', [
-            'products' => $query->paginate(25),
+        return view('livewire.items.item-index', [
+            'items' => $query->paginate(25),
         ]);
     }
 }

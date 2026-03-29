@@ -6,7 +6,7 @@ use App\Enums\FormStatus;
 use App\Models\Category;
 use App\Models\FormDefinition;
 use App\Models\FormSubmission;
-use App\Models\Product;
+use App\Models\Item;
 use App\Models\User;
 use App\Models\WorkflowDefinition;
 use Illuminate\Database\Seeder;
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $categories->each(function ($category) use ($admin) {
-            Product::factory()->count(3)->create([
+            Item::factory()->count(3)->create([
                 'category_id' => $category->id,
                 'created_by' => $admin->id,
             ]);

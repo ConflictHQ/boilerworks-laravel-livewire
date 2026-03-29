@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Item;
 use App\Models\User;
 use Illuminate\View\View;
 
@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         return view('dashboard', [
             'stats' => [
-                'products' => Product::count(),
+                'items' => Item::count(),
                 'categories' => Category::count(),
                 'users' => User::count(),
             ],

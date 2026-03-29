@@ -14,10 +14,10 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            'products.view',
-            'products.create',
-            'products.edit',
-            'products.delete',
+            'items.view',
+            'items.create',
+            'items.edit',
+            'items.delete',
             'categories.view',
             'categories.create',
             'categories.edit',
@@ -45,9 +45,9 @@ class PermissionSeeder extends Seeder
 
         $editor = Role::firstOrCreate(['name' => 'editor']);
         $editor->syncPermissions([
-            'products.view',
-            'products.create',
-            'products.edit',
+            'items.view',
+            'items.create',
+            'items.edit',
             'categories.view',
             'categories.create',
             'categories.edit',
@@ -61,7 +61,7 @@ class PermissionSeeder extends Seeder
 
         $viewer = Role::firstOrCreate(['name' => 'viewer']);
         $viewer->syncPermissions([
-            'products.view',
+            'items.view',
             'categories.view',
             'forms.view',
             'forms.submit',

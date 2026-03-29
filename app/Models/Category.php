@@ -20,8 +20,8 @@ class Category extends Model
 
     protected $hidden = ['id'];
 
-    public function products(): HasMany
+    public function items(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Item::class);
     }
 }

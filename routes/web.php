@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ItemController;
 use App\Livewire\Categories\CategoryForm;
 use App\Livewire\Categories\CategoryIndex;
-use App\Livewire\Products\ProductForm;
-use App\Livewire\Products\ProductIndex;
+use App\Livewire\Items\ItemForm;
+use App\Livewire\Items\ItemIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,22 +27,22 @@ Route::get('/status', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    // Products -- create routes before show to avoid {product} catching "create"
-    Route::middleware('permission:products.create')->group(function () {
-        Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
-        Route::post('products', [ProductController::class, 'store'])->name('products.store');
+    // Items -- create routes before show to avoid {item} catching "create"
+    Route::middleware('permission:items.create')->group(function () {
+        Route::get('items/create', [ItemController::class, 'create'])->name('items.create');
+        Route::post('items', [ItemController::class, 'store'])->name('items.store');
     });
-    Route::middleware('permission:products.view')->group(function () {
-        Route::get('products', [ProductController::class, 'index'])->name('products.index');
-        Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
+    Route::middleware('permission:items.view')->group(function () {
+        Route::get('items', [ItemController::class, 'index'])->name('items.index');
+        Route::get('items/{item}', [ItemController::class, 'show'])->name('items.show');
     });
-    Route::middleware('permission:products.edit')->group(function () {
-        Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-        Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::middleware('permission:items.edit')->group(function () {
+        Route::get('items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
+        Route::put('items/{item}', [ItemController::class, 'update'])->name('items.update');
     });
-    Route::delete('products/{product}', [ProductController::class, 'destroy'])
-        ->middleware('permission:products.delete')
-        ->name('products.destroy');
+    Route::delete('items/{item}', [ItemController::class, 'destroy'])
+        ->middleware('permission:items.delete')
+        ->name('items.destroy');
 
     // Categories -- create routes before show
     Route::middleware('permission:categories.create')->group(function () {
@@ -61,15 +61,15 @@ Route::middleware('auth')->group(function () {
         ->middleware('permission:categories.delete')
         ->name('categories.destroy');
 
-    // Livewire full-page components -- Products
-    Route::middleware('permission:products.view')->group(function () {
-        Route::get('lw/products', ProductIndex::class)->name('livewire.products.index');
+    // Livewire full-page components -- Items
+    Route::middleware('permission:items.view')->group(function () {
+        Route::get('lw/items', ItemIndex::class)->name('livewire.items.index');
     });
-    Route::middleware('permission:products.create')->group(function () {
-        Route::get('lw/products/create', ProductForm::class)->name('livewire.products.create');
+    Route::middleware('permission:items.create')->group(function () {
+        Route::get('lw/items/create', ItemForm::class)->name('livewire.items.create');
     });
-    Route::middleware('permission:products.edit')->group(function () {
-        Route::get('lw/products/{product}/edit', ProductForm::class)->name('livewire.products.edit');
+    Route::middleware('permission:items.edit')->group(function () {
+        Route::get('lw/items/{item}/edit', ItemForm::class)->name('livewire.items.edit');
     });
 
     // Livewire full-page components -- Categories

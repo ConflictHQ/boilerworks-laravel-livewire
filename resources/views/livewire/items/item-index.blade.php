@@ -1,14 +1,14 @@
 <div>
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold">Products</h1>
-        <a href="{{ route('livewire.products.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700" wire:navigate>New Product</a>
+        <h1 class="text-2xl font-bold">Items</h1>
+        <a href="{{ route('livewire.items.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700" wire:navigate>New Item</a>
     </div>
 
     <div class="mb-4">
         <input
             type="text"
             wire:model.live.debounce.300ms="search"
-            placeholder="Search products..."
+            placeholder="Search items..."
             class="w-full max-w-sm rounded-lg bg-zinc-900 border border-zinc-700 px-4 py-2 text-zinc-100 placeholder-zinc-500"
         >
     </div>
@@ -25,34 +25,34 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-zinc-700">
-                @forelse($products as $product)
+                @forelse($items as $item)
                 <tr class="hover:bg-zinc-750">
                     <td class="px-6 py-4">
-                        <a href="{{ route('products.show', $product) }}" class="text-indigo-400 hover:text-indigo-300">{{ $product->name }}</a>
+                        <a href="{{ route('items.show', $item) }}" class="text-indigo-400 hover:text-indigo-300">{{ $item->name }}</a>
                     </td>
-                    <td class="px-6 py-4 text-zinc-400">{{ $product->category?->name ?? '-' }}</td>
-                    <td class="px-6 py-4">${{ number_format($product->price, 2) }}</td>
+                    <td class="px-6 py-4 text-zinc-400">{{ $item->category?->name ?? '-' }}</td>
+                    <td class="px-6 py-4">${{ number_format($item->price, 2) }}</td>
                     <td class="px-6 py-4">
-                        <span class="inline-flex px-2 py-1 rounded-full text-xs {{ $product->status === 'active' ? 'bg-emerald-900/50 text-emerald-300' : 'bg-zinc-700 text-zinc-400' }}">
-                            {{ ucfirst($product->status) }}
+                        <span class="inline-flex px-2 py-1 rounded-full text-xs {{ $item->status === 'active' ? 'bg-emerald-900/50 text-emerald-300' : 'bg-zinc-700 text-zinc-400' }}">
+                            {{ ucfirst($item->status) }}
                         </span>
                     </td>
                     <td class="px-6 py-4 text-right space-x-2">
-                        <a href="{{ route('livewire.products.edit', $product) }}" class="text-zinc-400 hover:text-white text-xs" wire:navigate>Edit</a>
+                        <a href="{{ route('livewire.items.edit', $item) }}" class="text-zinc-400 hover:text-white text-xs" wire:navigate>Edit</a>
                         <button
-                            wire:click="delete('{{ $product->uuid }}')"
-                            wire:confirm="Delete this product?"
+                            wire:click="delete('{{ $item->uuid }}')"
+                            wire:confirm="Delete this item?"
                             class="text-red-400 hover:text-red-300 text-xs"
                         >Delete</button>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-8 text-center text-zinc-500">No products found.</td>
+                    <td colspan="5" class="px-6 py-8 text-center text-zinc-500">No items found.</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-    <div class="mt-4">{{ $products->links() }}</div>
+    <div class="mt-4">{{ $items->links() }}</div>
 </div>

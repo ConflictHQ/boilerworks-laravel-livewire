@@ -32,7 +32,7 @@ class CategoryIndex extends Component
 
     public function render(): View
     {
-        $query = Category::withCount('products')
+        $query = Category::withCount('items')
             ->orderBy('created_at', 'desc');
 
         if ($this->search !== '') {
