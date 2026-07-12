@@ -25,9 +25,9 @@ We will acknowledge your report within 48 hours and aim to release a fix within 
 
 When deploying Boilerworks:
 
-- Change all default credentials (database, MinIO, session secret)
+- Change all default credentials (database, Redis, MinIO, seeded users)
 - Use HTTPS in production
-- Set `NODE_ENV=production`
-- Configure `CORS_ORIGINS` to your domain only
-- Use strong Auth0 credentials
-- Review the security hardening in `bootstrap.md`
+- Set `APP_ENV=production` and `APP_DEBUG=false`
+- Generate a fresh `APP_KEY` (`php artisan key:generate`) and keep it secret
+- Set `SESSION_ENCRYPT=true` and restrict `SESSION_DOMAIN` to your domain
+- Keep dependencies current — CI runs `composer audit` on every push
